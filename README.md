@@ -75,3 +75,39 @@ face_login/
 └── static/
     ├── css/style.css       # Custom UI layout and dark-mode styling
     └── js/capture.js       # Camera streaming, frame loops, and API communication
+
+🔎 How It Works
++------------------+
+  |  Step 1: Login   | ---> Verify Username & Password (Factor 1)
+  +--------+---------+
+           |
+           v
+  +------------------+
+  |  Step 2: Camera  | ---> Request getUserMedia Web Stream
+  +--------+---------+
+           |
+           v
+  +------------------+
+  |  OpenCV Pipeline | ---> Haar Cascade Face Detection
+  +--------+---------+
+           |
+           +-----------------------+
+           |                       |
+           v                       v
+  +------------------+   +-------------------+
+  | LBPH Predictor   |   | Motion Liveness   |
+  | (Match Check)    |   | (Frame Diff Check)|
+  +--------+---------+   +---------+---------+
+           |                       |
+           +-----------+-----------+
+                       |
+                       v
+            [ Pass 2FA Criteria? ]
+             /                  \
+          (Yes)                 (No)
+           /                      \
+          v                        v
+  +---------------+        +---------------+
+  | Grant Access  |        | Reject Access |
+  | (Dashboard)   |        |  (Try Again)  |
+  +---------------+        +---------------+
