@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Enroll face' if mode == 'enroll' else 'Verify face' }} &mdash; Facescan{% endblock %}
+{% block content %}
+<section class="capture-wrap">
+  <div class="capture-card">
+    <p class="eyebrow">STEP 2 OF 2 &middot; {{ username|upper }}</p>
+    <h1>{{ 'Enroll your face' if mode == 'enroll' else 'Verify your identity' }}</h1>
+    <p class="lede">
+      {% if mode == 'enroll' %}
+        Center your face in frame. We'll capture {{ samples_needed }} samples &mdash;
+        turn your head very slightly during capture for a stronger model.
+      {% else %}
+        Look at the camera and stay naturally still &mdash; a slight blink or
+        head movement is expected. We watch for face match
+        <em>and</em> real, live motion before granting access.
+      {% endif %}
+    </p>
+
+    <div class="camera-stage">
+      <div class="reticle reticle--live">
+        <video id="video" autoplay playsinline muted></video>
+        <canvas id="canvas" hidden></canvas>
+        <div class="reticle-corners"><span></span><span></span><span></span><span></span></div>
+        <div class="reticle-sweep" id="sweep"></div>
+        <div class="status-chip" id="statusChip">Initializing camera&hellip;</div>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <p class="progress-label" id="progressLabel">0 / {{ samples_needed }} frames</p>
+    </div>
+
+    <div id="resultBox" class="alert" hidden></div>
+
+    <div class="capture-actions">
+      <button id="cancelBtn" class="btn btn--ghost">Cancel</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  window.CAPTURE_CONFIG = {
+    mode: "{{ mode }}",
+    samplesNeeded: {{ samples_needed }},
+    enrollFrameUrl: "{{ url_for('api_enroll_frame') }}",
+    finishEnrollUrl: "{{ url_for('api_finish_enrollment') }}",
+    verifyFrameUrl: "{{ url_for('api_verify_frame') }}",
+    cancelUrl: "{{ url_for('api_cancel') }}",
+    loginUrl: "{{ url_for('login') }}",
+    registerUrl: "{{ url_for('register') }}",
+    indexUrl: "{{ url_for('index') }}"
+  };
+</script>
+<script src="{{ url_for('static', filename='js/capture.js') }}"></script>
+{% endblock %}

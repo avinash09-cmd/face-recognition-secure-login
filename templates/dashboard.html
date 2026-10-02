@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Dashboard &mdash; Facescan{% endblock %}
+{% block content %}
+<section class="dash">
+  <div class="dash-card">
+    <p class="eyebrow">ACCESS GRANTED</p>
+    <h1>Welcome back, {{ user }}.</h1>
+    <p class="lede">Password verified. Face verified. Liveness confirmed.</p>
+    <div class="dash-grid">
+      <div class="dash-stat">
+        <span class="dash-stat-label">Factor 1</span>
+        <span class="dash-stat-value">Password &check;</span>
+      </div>
+      <div class="dash-stat">
+        <span class="dash-stat-label">Factor 2</span>
+        <span class="dash-stat-value">Face match &check;</span>
+      </div>
+      <div class="dash-stat">
+        <span class="dash-stat-label">Liveness</span>
+        <span class="dash-stat-value">Blink detected &check;</span>
+      </div>
+      <div class="dash-stat">
+        <span class="dash-stat-label">Session</span>
+        <span class="dash-stat-value">Active</span>
+      </div>
+    </div>
+    <a href="{{ url_for('logout') }}" class="btn btn--ghost">Sign out</a>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Enroll &mdash; Facescan{% endblock %}
+{% block content %}
+<section class="auth-wrap">
+  <div class="auth-card">
+    <p class="eyebrow">STEP 1 OF 2</p>
+    <h1>Create your credentials</h1>
+    <p class="lede">Next you'll enroll your face from the camera.</p>
+
+    {% if error %}<div class="alert alert--error">{{ error }}</div>{% endif %}
+
+    <form method="POST" class="form" autocomplete="off">
+      <label class="field">
+        <span>Username</span>
+        <input type="text" name="username" required minlength="3" maxlength="24" pattern="[a-zA-Z0-9_]+" placeholder="e.g. arjun_k">
+      </label>
+      <label class="field">
+        <span>Password</span>
+        <input type="password" name="password" required minlength="6" placeholder="At least 6 characters">
+      </label>
+      <label class="field">
+        <span>Confirm password</span>
+        <input type="password" name="confirm" required minlength="6" placeholder="Repeat password">
+      </label>
+      <button type="submit" class="btn btn--primary btn--block">Continue to face enrollment &rarr;</button>
+    </form>
+    <p class="switch">Already enrolled? <a href="{{ url_for('login') }}">Sign in</a></p>
+  </div>
+</section>
+{% endblock %}

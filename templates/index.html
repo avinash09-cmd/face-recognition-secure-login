@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Facescan // Face Login{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">TWO-FACTOR &middot; BIOMETRIC</p>
+    <h1>Your face is<br>the second key.</h1>
+    <p class="lede">
+      Password proves what you know. A live camera check with motion-based
+      liveness proves you're actually you, in front of the screen, right now.
+    </p>
+    <div class="hero-actions">
+      {% if user %}
+        <a href="{{ url_for('dashboard') }}" class="btn btn--primary">Go to dashboard</a>
+      {% else %}
+        <a href="{{ url_for('register') }}" class="btn btn--primary">Enroll your face</a>
+        <a href="{{ url_for('login') }}" class="btn btn--ghost">Sign in</a>
+      {% endif %}
+    </div>
+    <ul class="hero-specs">
+      <li><span>Detection</span>Haar cascade, frontal face + eyes</li>
+      <li><span>Recognition</span>LBPH histogram matching</li>
+      <li><span>Liveness</span>Frame-to-frame motion, not a static photo</li>
+      <li><span>Storage</span>Grayscale 200&times;200 crops, not raw photos</li>
+    </ul>
+  </div>
+  <div class="hero-visual" aria-hidden="true">
+    <div class="reticle">
+      <div class="reticle-corners">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="reticle-sweep"></div>
+      <div class="reticle-ring"></div>
+      <div class="reticle-center">◇</div>
+    </div>
+  </div>
+</section>
+
+<section class="steps">
+  <div class="step">
+    <p class="step-num">01</p>
+    <h3>Create credentials</h3>
+    <p>Pick a username and password &mdash; your first factor, stored as a salted hash.</p>
+  </div>
+  <div class="step">
+    <p class="step-num">02</p>
+    <h3>Enroll your face</h3>
+    <p>The camera captures 20 samples under your normal lighting to build a personal model.</p>
+  </div>
+  <div class="step">
+    <p class="step-num">03</p>
+    <h3>Verify to sign in</h3>
+    <p>Every login re-checks your face live, watching for natural, live movement before granting access.</p>
+  </div>
+</section>
+{% endblock %}
